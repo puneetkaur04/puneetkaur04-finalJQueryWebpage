@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel = "stylesheet" href="style.css">
+    <link rel = "stylesheet" href="jquery-ui/jquery-ui.min.css">
+    <link rel = "stylesheet" href="jquery-ui/jquery-ui.structure.css">
+    <link rel = "stylesheet" href="jquery-ui/jquery-ui.theme.css">
+    <link rel = "stylesheet" href="jquery-ui/jquery-ui.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  
+  <script src="js/jquery-3.6.0.js"></script>
+  <script src="jquery-ui/jquery-ui.js"></script>
+  <script>
+
+  // accordion 
+  $( function() {
+      $( "#accordion" ).accordion({
+        collapsible: true
+      });
+    } );
+
+  // date picker 
+    $( function() {
+    $( "#datepicker" ).datepicker();
+  });
+
+  // progress bar 
+    $( function() {
+      var progressTimer,
+        progressbar = $( "#progressbar" ),
+        progressLabel = $( ".progress-label" ),
+        dialogButtons = [{
+          text: "Cancel",
+          click: closeDownload
+        }],
+        dialog = $( "#dialog" ).dialog({
+          autoOpen: false,
+          closeOnEscape: false,
+          resizable: false,
+          buttons: dialogButtons,
+          open: function() {
+            progressTimer = setTimeout( progress, 2000 );
+          },
+          beforeClose: function() {
+            downloadButton.button( "option", {
+              disabled: false,
+              label: "Submit"
+            });
+          }
+        }),
+        downloadButton = $( "#downloadButton" )
+          .button()
+          .on( "click", function() {
+            $( this ).button( "option", {
+              disabled: true,
+              label: "Submitting..."
+            });
+            dialog.dialog( "open" );
+          });
+  
+      progressbar.progressbar({
+        value: false,
+        change: function() {
+          progressLabel.text( "Current Progress: " + progressbar.progressbar( "value" ) + "%" );
+        },
+        complete: function() {
+          progressLabel.text( "Complete!" );
+          dialog.dialog( "option", "buttons", [{
+            text: "Close",
+            click: closeDownload,
+          }]);
+          $(".ui-dialog button").last().trigger( "focus" );
+        }
+      });
+  
+      function progress() {
+        var val = progressbar.progressbar( "value" ) || 0;
+  
+        progressbar.progressbar( "value", val + Math.floor( Math.random() * 3 ) );
+  
+        if ( val <= 99 ) {
+          progressTimer = setTimeout( progress, 50 );
+        }
+      }
+  
+      function closeDownload() {
+        clearTimeout( progressTimer );
+        dialog
+          .dialog( "option", "buttons", dialogButtons )
+          .dialog( "close" );
+        progressbar.progressbar( "value", false );
+        progressLabel
+          .text( "Submit" );
+        downloadButton.trigger( "focus" );
+      }
+    } );
+
+  </script>
+</head>
+<body>
+    <div class ="topnav">
+        <a href="#home">Home</a>
+        <a href="#blog">Blog</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#services">Services</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#calender">Cost and FAQ</a>
+        <a href="#bookNow">Contact Information</a>
+        <a href="#bookNow">Book Now</a>
+    </div>
+    
+    <img src="camera.jpg" width="1519px" height="900px">
+
+    <h3 id= "service"> Services </h3>
+    
+        <div id="accordion">
+            <h3> Family Photography </h3>
+            <div>
+              <p> Time is constantly ticking… Memories fade and people grow older… But it doesn’t always have to be that way! </p>
+              <p>
+              Schedule your family portrait session right now and call: 602-265-2605 to speak with a professional family photographer. With over half a century of experience, you can be rest assured that Duke Photography is the best family portrait studio in the East Valley.
+              </p>
+              <p>
+                Your BEST moment is NOW and NOW is the BEST time to call the professional photographers in Phoenix! Get your smartphone out and call 602-265-2605 for an immediate no hassle obligation consulation with a professional photographer.
+              </p>
+            </div>
+            <h3> Senior Photography </h3>
+            <div>
+              <p>
+                Ask family and friends about their high school portrait. If they had a bad experience, then it wasn’t Duke Photography! If it was a great experience, they will remember it was because of Duke Photography. How do we know this? Find out what Katrina Sherk of Active Moms Magazine, a senior portrait alumni, had to say about Duke Photography.
+
+                We are dedicated to creating the best possible experience for parents and seniors. That is why we’ve created a website specifically for them. Please go and visit Duke Photography’s High School senior website!
+              </p>
+              <p>
+                We are dedicated to creating the best possible experience for parents and seniors. That is why we’ve created a website specifically for them. Please go and visit Duke Photography’s High School senior website!
+              </p>
+            </div>
+            <h3> Private-Public School Photographers </h3>
+            <div>
+              <p>
+                With Picture Day fast approaching children can become concerned with how their school photos might turn out. Choosing Duke Photography as your school’s official school photographer will ensure that your childrens’ smiles shine radiant and true.
+              </p>
+              <p>
+                Our professional school photographers will bring out the best in your children. Call 480.838.3660 to speak with a professional public/private school photographer and ask about what Duke Photography can do for your children.
+              </p>
+            </div>
+            <h3> Business and Commercial Photography </h3>
+            <div>
+              <p>
+                With over half a century of experience, you can be rest assured that our business photographers know how to capture the corporate and community leadership attributes your corporate organization strives to exhibit.
+              </p>
+              <p>
+                Our professional business photographers are also availble for corporate events. Speak with a professional business photographer: 602-265-2605 and ask about what Duke Photography can do for your organization.
+              <br>
+              </p>
+            </div>
+          </div>
+
+
+
+
+
+          <div>
+            <!-- the validation() function is executed once the submit button is clicked on -->  
+            <form name = "enrollment" onSubmit = "return validation()">
+              <fieldset>
+      
+                <legend> Personal Details </legend>
+                <!-- first name-->
+                <label for= "fName"> First Name: </label>
+                <input type = "text" id = "fName" name = "fName"> <br> <br>
+      
+                <!-- last name-->
+                <label for= "lName"> Last Name: </label>
+                <input type = "text" id = "lName" name = "lName"> <br> <br>
+      
+                <!-- gender -->
+                <label for="cars">Gender:</label>
+                  <select name="gender" id="gender">
+                    <option value="Default" selected> </option>
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                  </select>
+                  <br><br>
+      
+                <!-- phone number -->
+                <label for= "phoneNumber"> Phone Number: </label>
+                <input type = "text" id = "phoneNumber" name = "phoneNumber"> <br><br>
+      
+                <!-- date (calender) -->
+                <p>Date: <input type="text" id="datepicker"></p>
+
+                <!-- submit button -->
+                <input id="downloadButton" type="Submit" value="Submit">
+                  
+              </fieldset>
+            </form>
+          </div> 
+
+          <!-- progress bar -->
+          <section>
+            <div id="dialog" title="Form Submitting">
+              <div class="progress-label">Submitting</div>
+              <div id="progressbar"></div>
+            </div>
+          </section> 
+    
+    <!-- footer -->
+    <footer>
+        <p>Photographer: Puneet Kaur </p>
+        <P>Phone Number: 602-632-3973 </P>
+        <p>Email: <a href="mailto:hege@example.com">puneetkaur595@gmail.com</a></p>
+    </footer>
+</body>
+</html>
